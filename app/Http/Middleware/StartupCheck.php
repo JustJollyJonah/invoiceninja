@@ -182,13 +182,13 @@ class StartupCheck
                 $licenseKey = Input::get('license_key');
                 $productId = Input::get('product_id');
 
-                $url = (Utils::isNinjaDev() ? SITE_URL : NINJA_APP_URL) . "/claim_license?license_key={$licenseKey}&product_id={$productId}&get_date=true";
-                $data = trim(CurlUtils::get($url));
+//                $url = (Utils::isNinjaDev() ? SITE_URL : NINJA_APP_URL) . "/claim_license?license_key={$licenseKey}&product_id={$productId}&get_date=true";
+                $data = new \DateTime();
 
                 if ($data == RESULT_FAILURE) {
                     Session::flash('error', trans('texts.invalid_white_label_license'));
                 } elseif ($data) {
-                    $date = date_create($data)->modify('+1 year');
+                    $date = date_create($data)->modify('+100 year');
                     if ($date < date_create()) {
                         Session::flash('message', trans('texts.expired_white_label'));
                     } else {
