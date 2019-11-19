@@ -188,12 +188,12 @@ class StartupCheck
                 if ($data == RESULT_FAILURE) {
                     Session::flash('error', trans('texts.invalid_white_label_license'));
                 } elseif ($data) {
-                    $date = date_create($data)->modify('+100 year');
+                    $date = $data->modify('+100 year');
                     if ($date < date_create()) {
                         Session::flash('message', trans('texts.expired_white_label'));
                     } else {
                         $company->plan_term = PLAN_TERM_YEARLY;
-                        $company->plan_paid = $data;
+                        $company->plan_paid = $data->format('Y-m-d');
                         $company->plan_expires = $date->format('Y-m-d');
                         $company->plan = PLAN_WHITE_LABEL;
                         $company->save();
